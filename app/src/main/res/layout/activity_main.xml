@@ -97,6 +97,7 @@
                 android:layout_marginRight="8dp"
                 android:text="BALLS"
                 android:textSize="12sp"
+                android:elevation="0dp"
                 android:textColor="@color/white"
                 android:background="@drawable/option_buttons_bg"
                 android:fontFamily="@font/montserrat" />
