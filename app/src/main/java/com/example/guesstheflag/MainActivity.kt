@@ -1,5 +1,6 @@
 package com.example.guesstheflag
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 
 class MainActivity : AppCompatActivity() {
     // Country code to country name and flag mapping
@@ -270,6 +272,9 @@ class MainActivity : AppCompatActivity() {
         "zw" to Pair("Zimbabwe", R.drawable.zw)
     )
 
+    private lateinit var mediaPlayer: MediaPlayer
+    private lateinit var mediaPlayer1: MediaPlayer
+    private lateinit var mediaPlayer2: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -287,6 +292,14 @@ class MainActivity : AppCompatActivity() {
 
         var correctAnswer: String? = null
         textview.text = "Streak: 0"
+
+        //media player
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.click)
+        mediaPlayer1 = MediaPlayer.create(this, R.raw.correct_ans)
+        mediaPlayer2 = MediaPlayer.create(this, R.raw.wrong_ans)
+
+
 
         // Function to set a random flag and options
         fun setRandomFlagAndOptions() {
@@ -307,7 +320,7 @@ class MainActivity : AppCompatActivity() {
                 .take(3) // Take three incorrect options
                 .map { it.value.first } // Get their names
 
-            val toBeDeleted = incorrectOptions
+            //val toBeDeleted = incorrectOptions
 
             // Combine correct and incorrect options and shuffle them
             val allOptions = (incorrectOptions + correctCountryName).shuffled()
@@ -320,8 +333,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Function to check the answer
-        fun checkAnswer(selectedOption: String) {
+        fun checkAnswer(selectedButton: Button, selectedOption: String) {
+            val buttons = listOf(button1, button2, button3, button4)
             if (selectedOption == correctAnswer) {
+                mediaPlayer1.start()
+                selectedButton.setBackgroundResource(R.drawable.correct_option)
+
                 Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
                 val currentStreak =
                     textview.text.toString().substringAfter("Streak: ").toIntOrNull() ?: 0
@@ -329,46 +346,70 @@ class MainActivity : AppCompatActivity() {
                 textview.text = "Streak: $newStreak"
 
             } else {
+                mediaPlayer2.start()
+                selectedButton.setBackgroundResource(R.drawable.incorrect_option)
                 Toast.makeText(this, "Wrong! Correct answer: $correctAnswer", Toast.LENGTH_SHORT)
                     .show()
                 textview.text = "Streak: 0"
 
+                buttons.forEach {
+                    if (it.text == correctAnswer) {
+                        it.setBackgroundResource(R.drawable.correct_option)
+                    }
+
+                }
+                Handler(Looper.getMainLooper()).postDelayed({
+                    // Logic to display the next flag
+                    setRandomFlagAndOptions()
+                }, 2000)
             }
-            Handler(Looper.getMainLooper()).postDelayed({
-                // Logic to display the next flag
-                setRandomFlagAndOptions()
-            }, 2000)
         }
-
-        // Set listeners for buttons
-        button1.setOnClickListener { checkAnswer(button1.text.toString()) }
-        button2.setOnClickListener { checkAnswer(button2.text.toString()) }
-        button3.setOnClickListener { checkAnswer(button3.text.toString()) }
-        button4.setOnClickListener { checkAnswer(button4.text.toString()) }
-
-        // Set a random flag and options initially
-        setRandomFlagAndOptions()
-
-        // Change the flag and options on clicking the "Next" button
-        nextButton.setOnClickListener {
-            setRandomFlagAndOptions()
-            textview.text = "Streak: 0"
-        }
-        hintButton.setOnClickListener {
+        fun resetButtonColors() {
             val buttons = listOf(button1, button2, button3, button4)
-
-            // Find buttons with incorrect options
-            val incorrectButtons =
-                buttons.filter { it.text != correctAnswer && it.text.isNotEmpty() }
-
-            // If there are incorrect options available
-            if (incorrectButtons.isNotEmpty()) {
-                // Randomly pick one incorrect option
-                val buttonToBlank = incorrectButtons.random()
-
-                // Set its text to an empty string
-                buttonToBlank.text = ""
+            buttons.forEach {
+                it.setBackgroundResource(R.drawable.option_buttons_bg)
             }
         }
+
+            // Set listeners for buttons
+            button1.setOnClickListener {
+                checkAnswer(button1, button1.text.toString())
+            }
+            button2.setOnClickListener {
+                checkAnswer(button2, button2.text.toString())
+            }
+            button3.setOnClickListener {
+                checkAnswer(button3, button3.text.toString())
+            }
+            button4.setOnClickListener {
+                checkAnswer(button4, button4.text.toString())
+            }
+
+            // Set a random flag and options initially
+            setRandomFlagAndOptions()
+
+            // Change the flag and options on clicking the "Next" button
+            nextButton.setOnClickListener {
+                mediaPlayer.start()
+                setRandomFlagAndOptions()
+                textview.text = "Streak: 0"
+            }
+            hintButton.setOnClickListener {
+                mediaPlayer.start()
+                val buttons = listOf(button1, button2, button3, button4)
+
+                // Find buttons with incorrect options
+                val incorrectButtons =
+                    buttons.filter { it.text != correctAnswer && it.text.isNotEmpty() }
+
+                // If there are incorrect options available
+                if (incorrectButtons.isNotEmpty()) {
+                    // Randomly pick one incorrect option
+                    val buttonToBlank = incorrectButtons.random()
+
+                    // Set its text to an empty string
+                    buttonToBlank.text = ""
+                }
+            }
     }
 }
