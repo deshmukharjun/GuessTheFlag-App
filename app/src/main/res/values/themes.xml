@@ -1,15 +1,20 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Base application theme -->
     <style name="Base.Theme.GuessTheFlag" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Applying the custom button style globally -->
         <item name="materialButtonStyle">@style/CustomButton</item>
     </style>
 
-
+    <!-- Theme for GuessTheFlag app -->
     <style name="Theme.GuessTheFlag" parent="Base.Theme.GuessTheFlag" />
+
+    <!-- Custom button style -->
     <style name="CustomButton" parent="Widget.Material3.Button">
+        <!-- Set the custom background for buttons -->
         <item name="android:background">@drawable/option_buttons_bg</item>
+        <!-- Set the custom text color for buttons -->
         <item name="android:textColor">@android:color/black</item>
     </style>
-
 
 </resources>
