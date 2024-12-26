@@ -96,7 +96,7 @@
                 android:padding="12dp"
                 android:layout_marginRight="8dp"
                 android:text="BALLS"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:elevation="0dp"
                 android:textColor="@color/white"
                 android:background="@drawable/option_buttons_bg"
@@ -110,7 +110,7 @@
                 android:padding="12dp"
                 android:layout_marginLeft="8dp"
                 android:text="BALLS"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:textColor="@color/white"
                 android:background="@drawable/option_buttons_bg"
                 android:fontFamily="@font/montserrat" />
@@ -135,7 +135,7 @@
                 android:layout_marginRight="8dp"
                 android:text="BALLS"
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:background="@drawable/option_buttons_bg"
                 android:fontFamily="@font/montserrat"/>
 
@@ -148,7 +148,7 @@
                 android:layout_marginLeft="8dp"
                 android:text="BALLS"
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:background="@drawable/option_buttons_bg"
                 android:fontFamily="@font/montserrat" />
         </LinearLayout>
