@@ -1,12 +1,14 @@
 package com.example.guesstheflag
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
     // Country code to country name and flag mapping
@@ -279,8 +281,10 @@ class MainActivity : AppCompatActivity() {
         val button2 = findViewById<Button>(R.id.button2)
         val button3 = findViewById<Button>(R.id.button3)
         val button4 = findViewById<Button>(R.id.button4)
+        val textview = findViewById<TextView>(R.id.streak)
 
         var correctAnswer: String? = null
+        textview.text = "Streak: 0"
 
         // Function to set a random flag and options
         fun setRandomFlagAndOptions() {
@@ -315,9 +319,19 @@ class MainActivity : AppCompatActivity() {
         fun checkAnswer(selectedOption: String) {
             if (selectedOption == correctAnswer) {
                 Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
+                val currentStreak = textview.text.toString().substringAfter("Streak: ").toIntOrNull() ?: 0
+                val newStreak = currentStreak + 1
+                textview.text = "Streak: $newStreak"
+
             } else {
                 Toast.makeText(this, "Wrong! Correct answer: $correctAnswer", Toast.LENGTH_SHORT).show()
+                textview.text = "Streak: 0"
+
             }
+            Handler(Looper.getMainLooper()).postDelayed({
+                 // Logic to display the next flag
+                setRandomFlagAndOptions()
+            }, 2000)
         }
 
         // Set listeners for buttons
@@ -332,6 +346,7 @@ class MainActivity : AppCompatActivity() {
         // Change the flag and options on clicking the "Next" button
         nextButton.setOnClickListener {
             setRandomFlagAndOptions()
+            textview.text = "Streak: 0"
         }
     }
 }
