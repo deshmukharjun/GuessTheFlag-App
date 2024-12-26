@@ -277,11 +277,13 @@ class MainActivity : AppCompatActivity() {
 
         val imageView = findViewById<ImageView>(R.id.imageView1)
         val nextButton = findViewById<ImageButton>(R.id.imageButton1)
+        val hintButton = findViewById<ImageButton>(R.id.imageButton2)
         val button1 = findViewById<Button>(R.id.button1)
         val button2 = findViewById<Button>(R.id.button2)
         val button3 = findViewById<Button>(R.id.button3)
         val button4 = findViewById<Button>(R.id.button4)
         val textview = findViewById<TextView>(R.id.streak)
+
 
         var correctAnswer: String? = null
         textview.text = "Streak: 0"
@@ -305,6 +307,8 @@ class MainActivity : AppCompatActivity() {
                 .take(3) // Take three incorrect options
                 .map { it.value.first } // Get their names
 
+            val toBeDeleted = incorrectOptions
+
             // Combine correct and incorrect options and shuffle them
             val allOptions = (incorrectOptions + correctCountryName).shuffled()
 
@@ -319,12 +323,14 @@ class MainActivity : AppCompatActivity() {
         fun checkAnswer(selectedOption: String) {
             if (selectedOption == correctAnswer) {
                 Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
-                val currentStreak = textview.text.toString().substringAfter("Streak: ").toIntOrNull() ?: 0
+                val currentStreak =
+                    textview.text.toString().substringAfter("Streak: ").toIntOrNull() ?: 0
                 val newStreak = currentStreak + 1
                 textview.text = "Streak: $newStreak"
 
             } else {
-                Toast.makeText(this, "Wrong! Correct answer: $correctAnswer", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Wrong! Correct answer: $correctAnswer", Toast.LENGTH_SHORT)
+                    .show()
                 textview.text = "Streak: 0"
 
             }
@@ -347,6 +353,22 @@ class MainActivity : AppCompatActivity() {
         nextButton.setOnClickListener {
             setRandomFlagAndOptions()
             textview.text = "Streak: 0"
+        }
+        hintButton.setOnClickListener {
+            val buttons = listOf(button1, button2, button3, button4)
+
+            // Find buttons with incorrect options
+            val incorrectButtons =
+                buttons.filter { it.text != correctAnswer && it.text.isNotEmpty() }
+
+            // If there are incorrect options available
+            if (incorrectButtons.isNotEmpty()) {
+                // Randomly pick one incorrect option
+                val buttonToBlank = incorrectButtons.random()
+
+                // Set its text to an empty string
+                buttonToBlank.text = ""
+            }
         }
     }
 }
