@@ -1,9 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- Base application theme -->
     <style name="Base.Theme.GuessTheFlag" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="materialButtonStyle">@style/CustomButton</item>
     </style>
 
+
     <style name="Theme.GuessTheFlag" parent="Base.Theme.GuessTheFlag" />
+    <style name="CustomButton" parent="Widget.Material3.Button">
+        <item name="android:background">@drawable/option_buttons_bg</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+
 </resources>
