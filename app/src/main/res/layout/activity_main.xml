@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="16dp"
             android:fontFamily="@font/montserrat_medium"
             android:text="Guess The Flag"
             android:textAlignment="center"
@@ -56,7 +57,7 @@
             android:layout_marginBottom="32dp"
             android:orientation="horizontal"
             android:paddingLeft="128dp"
-            android:paddingTop="16dp"
+            android:paddingTop="8dp"
             android:paddingRight="128dp"
             android:gravity="center">
 
@@ -96,6 +97,7 @@
                 android:layout_marginRight="8dp"
                 android:text="BALLS"
                 android:textSize="12sp"
+                android:textColor="@color/white"
                 android:background="@drawable/option_buttons_bg"
                 android:fontFamily="@font/montserrat" />
 
@@ -108,6 +110,7 @@
                 android:layout_marginLeft="8dp"
                 android:text="BALLS"
                 android:textSize="12sp"
+                android:textColor="@color/white"
                 android:background="@drawable/option_buttons_bg"
                 android:fontFamily="@font/montserrat" />
 
@@ -130,6 +133,7 @@
                 android:padding="12dp"
                 android:layout_marginRight="8dp"
                 android:text="BALLS"
+                android:textColor="@color/white"
                 android:textSize="12sp"
                 android:background="@drawable/option_buttons_bg"
                 android:fontFamily="@font/montserrat"/>
@@ -142,6 +146,7 @@
                 android:padding="12dp"
                 android:layout_marginLeft="8dp"
                 android:text="BALLS"
+                android:textColor="@color/white"
                 android:textSize="12sp"
                 android:background="@drawable/option_buttons_bg"
                 android:fontFamily="@font/montserrat" />

@@ -14,7 +14,7 @@
         <!-- Set the custom background for buttons -->
         <item name="android:background">@drawable/option_buttons_bg</item>
         <!-- Set the custom text color for buttons -->
-        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
 </resources>
