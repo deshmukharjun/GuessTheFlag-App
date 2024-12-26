@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         "ai" to Pair("Anguilla", R.drawable.ai),
         "al" to Pair("Albania", R.drawable.al),
         "am" to Pair("Armenia", R.drawable.am),
+        // Add the rest of the countries...
         "zw" to Pair("Zimbabwe", R.drawable.zw)
     )
 
