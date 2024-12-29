@@ -328,9 +328,22 @@ class MainActivity : AppCompatActivity() {
             button4.text = allOptions[3]
         }
 
+        var buttonstoenable = listOf(button1, button2, button3, button4, hintButton, nextButton)
+
+        // Disable all buttons
+        fun disableAllButtons() {
+            buttonstoenable.forEach { it.isEnabled = false }
+        }
+
+        // Enable all buttons
+        fun enableAllButtons() {
+            buttonstoenable.forEach { it.isEnabled = true }
+        }
+
         // Check if the selected answer is correct
         fun checkAnswer(selectedButton: Button, selectedOption: String) {
             val buttons = listOf(button1, button2, button3, button4)
+            disableAllButtons()
             if (selectedOption == correctAnswer) {
                 mediaPlayerCorrect.start()
                 selectedButton.setBackgroundResource(R.drawable.correct_option)
@@ -354,6 +367,7 @@ class MainActivity : AppCompatActivity() {
 
             Handler(Looper.getMainLooper()).postDelayed({
                 setRandomFlagAndOptions()
+                enableAllButtons()
             }, 2000)
         }
 
