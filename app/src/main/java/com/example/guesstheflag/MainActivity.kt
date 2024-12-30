@@ -1,6 +1,7 @@
 package com.example.guesstheflag
 
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -273,6 +274,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var mediaPlayerCorrect: MediaPlayer
     private lateinit var mediaPlayerIncorrect: MediaPlayer
+    private lateinit var sharedPreferences: SharedPreferences
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -291,7 +293,9 @@ class MainActivity : AppCompatActivity() {
 
         var correctAnswer: String? = null
         var score = 0
-        var highScore = 0
+
+        sharedPreferences = getSharedPreferences("GuessTheFlag", MODE_PRIVATE)
+        var highScore = sharedPreferences.getInt("HIGH_SCORE", 0)
 
         textViewScore.text = "Score: $score"
         textViewHighScore.text = "High Score: $highScore"
@@ -348,6 +352,10 @@ class MainActivity : AppCompatActivity() {
                 score++
                 if (score > highScore) {
                     highScore = score
+
+                    val editor = sharedPreferences.edit()
+                    editor.putInt("HIGH_SCORE", highScore)
+                    editor.apply()
                 }
                 textViewScore.text = "Score: $score"
                 textViewHighScore.text = "High Score: $highScore"
