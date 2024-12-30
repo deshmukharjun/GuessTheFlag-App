@@ -12,7 +12,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
-    // Country code to country name and flag mapping
     private val countryFlags = mapOf(
         "ad" to Pair("Andorra", R.drawable.ad),
         "ae" to Pair("United Arab Emirates", R.drawable.ae),
@@ -287,23 +286,25 @@ class MainActivity : AppCompatActivity() {
         val button2 = findViewById<Button>(R.id.button2)
         val button3 = findViewById<Button>(R.id.button3)
         val button4 = findViewById<Button>(R.id.button4)
-        val textViewStreak = findViewById<TextView>(R.id.streak)
+        val textViewScore = findViewById<TextView>(R.id.score)
+        val textViewHighScore = findViewById<TextView>(R.id.highscore)
 
         var correctAnswer: String? = null
-        textViewStreak.text = "Streak: 0"
+        var score = 0
+        var highScore = 0
 
-        // Initialize media players
+        textViewScore.text = "Score: $score"
+        textViewHighScore.text = "High Score: $highScore"
+
         mediaPlayer = MediaPlayer.create(this, R.raw.click)
         mediaPlayerCorrect = MediaPlayer.create(this, R.raw.correct_ans)
         mediaPlayerIncorrect = MediaPlayer.create(this, R.raw.wrong_ans)
 
-        // Reset button backgrounds to default
         fun resetButtonColors() {
             val buttons = listOf(button1, button2, button3, button4)
             buttons.forEach { it.setBackgroundResource(R.drawable.option_buttons_bg) }
         }
 
-        // Set a random flag and its options
         fun setRandomFlagAndOptions() {
             resetButtonColors()
             val randomEntry = countryFlags.entries.random()
@@ -328,35 +329,33 @@ class MainActivity : AppCompatActivity() {
             button4.text = allOptions[3]
         }
 
-        var buttonstoenable = listOf(button1, button2, button3, button4, hintButton, nextButton)
+        val buttonstoenable = listOf(button1, button2, button3, button4, hintButton, nextButton)
 
-        // Disable all buttons
         fun disableAllButtons() {
             buttonstoenable.forEach { it.isEnabled = false }
         }
 
-        // Enable all buttons
         fun enableAllButtons() {
             buttonstoenable.forEach { it.isEnabled = true }
         }
 
-        // Check if the selected answer is correct
         fun checkAnswer(selectedButton: Button, selectedOption: String) {
             val buttons = listOf(button1, button2, button3, button4)
             disableAllButtons()
             if (selectedOption == correctAnswer) {
                 mediaPlayerCorrect.start()
                 selectedButton.setBackgroundResource(R.drawable.correct_option)
-
-                // Convert textViewStreak.text to String explicitly
-                val currentStreak = textViewStreak.text.toString().substringAfter("Streak: ").toIntOrNull() ?: 0
-                textViewStreak.text = "Streak: ${currentStreak + 1}"
-
+                score++
+                if (score > highScore) {
+                    highScore = score
+                }
+                textViewScore.text = "Score: $score"
+                textViewHighScore.text = "High Score: $highScore"
             } else {
                 mediaPlayerIncorrect.start()
                 selectedButton.setBackgroundResource(R.drawable.incorrect_option)
-
-                textViewStreak.text = "Streak: 0"
+                score = 0
+                textViewScore.text = "Score: $score"
 
                 buttons.forEach {
                     if (it.text == correctAnswer) {
@@ -371,7 +370,6 @@ class MainActivity : AppCompatActivity() {
             }, 2000)
         }
 
-        // Set listeners for buttons
         val buttons = listOf(button1, button2, button3, button4)
         buttons.forEach { button ->
             button.setOnClickListener {
@@ -379,17 +377,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Set a random flag and options initially
         setRandomFlagAndOptions()
 
-        // Next button to reset streak and load a new flag
         nextButton.setOnClickListener {
             mediaPlayer.start()
             setRandomFlagAndOptions()
-            textViewStreak.text = "Streak: 0"
+            score = 0
+            textViewScore.text = "Score: $score"
         }
 
-        // Hint button to remove one incorrect option
         hintButton.setOnClickListener {
             mediaPlayer.start()
             val incorrectButtons = buttons.filter { it.text != correctAnswer && it.text.isNotEmpty() }

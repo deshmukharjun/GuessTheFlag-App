@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="8dp"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,17 +30,34 @@
             android:textColor="#384D48"
             android:textSize="32sp" />
 
-        <TextView
-            android:id="@+id/streak"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="0dp"
-            android:fontFamily="@font/montserrat"
-            android:text="Streak: 0"
-            android:textAlignment="center"
-            android:textColor="#384D48"
-            android:textSize="24sp" />
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Score: 0"
+                android:textColor="#384D48"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/highscore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/montserrat"
+                android:text="High Score: 0"
+                android:textColor="#384D48"
+                android:textSize="18sp" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/imageView1"
@@ -78,9 +95,7 @@
                 android:background="@drawable/rounded_button_background"
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/skip_icon" />
-
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -114,9 +129,6 @@
                 android:textColor="@color/white"
                 android:background="@drawable/option_buttons_bg"
                 android:fontFamily="@font/montserrat" />
-
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -137,7 +149,7 @@
                 android:textColor="@color/white"
                 android:textSize="10sp"
                 android:background="@drawable/option_buttons_bg"
-                android:fontFamily="@font/montserrat"/>
+                android:fontFamily="@font/montserrat" />
 
             <Button
                 android:id="@+id/button4"
