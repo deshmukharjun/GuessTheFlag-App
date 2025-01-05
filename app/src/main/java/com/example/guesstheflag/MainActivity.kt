@@ -290,15 +290,19 @@ class MainActivity : AppCompatActivity() {
         val button4 = findViewById<Button>(R.id.button4)
         val textViewScore = findViewById<TextView>(R.id.score)
         val textViewHighScore = findViewById<TextView>(R.id.highscore)
+        val textViewHints = findViewById<TextView>(R.id.hintsLeft)
 
         var correctAnswer: String? = null
         var score = 0
+        var hintsLeft = 3 // Start with 3 hints
+        var correctAnswerStreak = 0 // Counter for bonus hints
 
         sharedPreferences = getSharedPreferences("GuessTheFlag", MODE_PRIVATE)
         var highScore = sharedPreferences.getInt("HIGH_SCORE", 0)
 
         textViewScore.text = "Score: $score"
         textViewHighScore.text = "High Score: $highScore"
+        textViewHints.text = "Hints: $hintsLeft"
 
         mediaPlayer = MediaPlayer.create(this, R.raw.click)
         mediaPlayerCorrect = MediaPlayer.create(this, R.raw.correct_ans)
@@ -350,6 +354,13 @@ class MainActivity : AppCompatActivity() {
                 mediaPlayerCorrect.start()
                 selectedButton.setBackgroundResource(R.drawable.correct_option)
                 score++
+                correctAnswerStreak++
+
+                if (correctAnswerStreak == 3) {
+                    hintsLeft++
+                    correctAnswerStreak = 0
+                }
+
                 if (score > highScore) {
                     highScore = score
 
@@ -363,6 +374,7 @@ class MainActivity : AppCompatActivity() {
                 mediaPlayerIncorrect.start()
                 selectedButton.setBackgroundResource(R.drawable.incorrect_option)
                 score = 0
+                correctAnswerStreak = 0 // Reset streak on incorrect answer
                 textViewScore.text = "Score: $score"
 
                 buttons.forEach {
@@ -371,6 +383,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+
+            textViewHints.text = "Hints: $hintsLeft"
 
             Handler(Looper.getMainLooper()).postDelayed({
                 setRandomFlagAndOptions()
@@ -395,12 +409,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         hintButton.setOnClickListener {
-            mediaPlayer.start()
-            val incorrectButtons = buttons.filter { it.text != correctAnswer && it.text.isNotEmpty() }
-            if (incorrectButtons.isNotEmpty()) {
-                val buttonToBlank = incorrectButtons.random()
-                buttonToBlank.text = ""
+            if (hintsLeft > 0) {
+                mediaPlayer.start()
+                val incorrectButtons = buttons.filter { it.text != correctAnswer && it.text.isNotEmpty() }
+                if (incorrectButtons.isNotEmpty()) {
+                    val buttonToBlank = incorrectButtons.random()
+                    buttonToBlank.text = ""
+                    hintsLeft--
+                }
             }
+            textViewHints.text = "Hints: $hintsLeft"
         }
     }
 }

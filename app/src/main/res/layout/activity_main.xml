@@ -49,6 +49,17 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/hintsLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Hints: 3"
+                android:textStyle="bold"
+                android:textColor="#384D48"
+                android:textSize="18sp" />
+
+            <TextView
                 android:id="@+id/highscore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,6 +68,8 @@
                 android:text="High Score: 0"
                 android:textColor="#384D48"
                 android:textSize="18sp" />
+
+
         </LinearLayout>
 
         <ImageView
@@ -164,6 +177,5 @@
                 android:background="@drawable/option_buttons_bg"
                 android:fontFamily="@font/montserrat" />
         </LinearLayout>
-
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
