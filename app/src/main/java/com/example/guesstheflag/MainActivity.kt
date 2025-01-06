@@ -415,6 +415,7 @@ class MainActivity : AppCompatActivity() {
                 if (incorrectButtons.isNotEmpty()) {
                     val buttonToBlank = incorrectButtons.random()
                     buttonToBlank.text = ""
+                    buttonToBlank.isEnabled = false
                     hintsLeft--
                 }
             }
